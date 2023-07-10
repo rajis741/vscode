@@ -19,18 +19,28 @@ steps:
     displayName: "Install Rust"
 
   - powershell: |
-      mkdir -Force "$env:USERPROFILE\.cargo"
-      Set-Content -Path "$env:USERPROFILE\.cargo\config.toml" -Value @"
+      mkdir -Force ".cargo"
+      Set-Content -Path ".cargo\config.toml" -Value @"
       [registries]
       vscode = { index = "$($env:CARGO_REGISTRY)" }
 
       [source.crates-io]
       replace-with = 'vscode'
+
+      [unstable]
+      registry-auth = true
       "@ -Force
 
-      Get-Content "$env:USERPROFILE\.cargo\config.toml"
+      Get-Content ".cargo\config.toml"
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     condition: and(succeeded(), ne(variables['CARGO_REGISTRY'], 'none'))
     displayName: Setup Cargo Registry
+
+  - task: CargoAuthenticate@0
+    inputs:
+      configFile: .cargo/config.toml
+    displayName: Authenticate Cargo Registry
 
   - powershell: |
       . build/azure-pipelines/win32/exec.ps1
