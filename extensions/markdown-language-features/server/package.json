@@ -17,7 +17,7 @@
     "vscode-uri": "^3.0.3"
   },
   "devDependencies": {
-    "@types/node": "16.x"
+    "@types/node": "16.18.38"
   },
   "scripts": {
     "compile": "gulp compile-extension:markdown-language-features-server",
