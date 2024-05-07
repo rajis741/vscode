@@ -161,7 +161,7 @@
     "vscode-nls": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "16.x"
+    "@types/node": "16.18.96"
   },
   "repository": {
     "type": "git",
